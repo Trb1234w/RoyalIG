@@ -42,8 +42,59 @@
       <p>ℹ️ Vous pouvez appeler ce numéro avant de payer pour toute question ou assistance.</p>
     </div>
   </section>
+
+  <section class="newsletter">
+    <h2>Inscription à la newsletter</h2>
+    <p>Ne ratez aucun événement royal. Inscrivez-vous pour recevoir les prochaines exclusivités.</p>
+    <form id="newsletterForm" action="https://docs.google.com/forms/d/e/1FAIpQLSc_TrXpqGs9yCYRWQJNpoVbDIMWgehRZcffJ_LuVAgrgka_HA/formResponse" method="POST" enctype="multipart/form-data">
+        <input type="text" name="entry.1344855031" placeholder="Prénom" required>
+        <input type="text" name="entry.510990491" placeholder="Nom" required>
+        <input type="tel" name="entry.478854068" placeholder="Téléphone WhatsApp" required>
+        <input type="text" name="entry.1169731" placeholder="Adresse" required>
+        <input type="text" name="entry.45515339" placeholder="Nom du profil Instagram ou Facebook" required>
+        <button type="submit">S'inscrire</button>
+    </form>
+    <div id="successMessage" style="display:none;">
+        <p>Votre inscription a bien été envoyée. Merci !</p>
+    </div>
+  </section>
+
+
   <footer class="footer">
     <p>Besoin d'aide ? Contactez-nous sur WhatsApp au <strong>620 74 71 41</strong></p>
   </footer>
 </body>
+<script>
+  document.getElementById("newsletterForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Empêche la soumission classique
+  
+      var form = this;
+      var formData = new FormData(form); // Prépare les données
+  
+      // Affiche immédiatement un message d'inscription réussie
+      const successMessage = document.getElementById("successMessage");
+      successMessage.innerHTML = "<p>🎉 Inscription réussie ! Merci beaucoup.</p>";
+      successMessage.style.display = "block";
+  
+      // Vide le formulaire
+      form.reset();
+  
+      // Envoie les données au Google Form
+      fetch(form.action, {
+          method: 'POST',
+          mode: 'no-cors', // Important pour contourner les CORS
+          body: formData
+      })
+      .catch(error => {
+          console.error("Erreur d'envoi:", error);
+      });
+  
+      // Recharge la page après 3 secondes
+      setTimeout(() => {
+          window.location.reload();
+      }, 3000);
+  });
+  </script>
+  
 </html>
+
